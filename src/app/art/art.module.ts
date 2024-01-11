@@ -5,6 +5,8 @@ import {FooterComponent} from "./components/footer/footer.component";
 import {SearchBoxComponent} from "./components/search-box/search-box.component";
 import {MainContainerComponent} from "./components/main-container/main-container.component";
 import {HomePageComponent} from "./pages/home-page/home-page.component";
+import {PaintingDetailsComponent} from "./components/painting/painting-details/painting-details.component";
+import {PaintingListComponent} from "./components/painting/painting-list/painting-list.component";
 
 
 @NgModule({
@@ -13,7 +15,9 @@ import {HomePageComponent} from "./pages/home-page/home-page.component";
     FooterComponent,
     SearchBoxComponent,
     MainContainerComponent,
-    HomePageComponent
+    HomePageComponent,
+    PaintingDetailsComponent,
+    PaintingListComponent
   ],
   imports: [
     CommonModule
