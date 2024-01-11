@@ -7,6 +7,12 @@ import {MainContainerComponent} from "./components/main-container/main-container
 import {HomePageComponent} from "./pages/home-page/home-page.component";
 import {PaintingDetailsComponent} from "./components/painting/painting-details/painting-details.component";
 import {PaintingListComponent} from "./components/painting/painting-list/painting-list.component";
+import { PaintingPageComponent } from './pages/painting-page/painting-page.component';
+import { SignupPageComponent } from './pages/login/signup-page/signup-page.component';
+import { SigninPageComponent } from './pages/login/signin-page/signin-page.component';
+import { PaintingDetailsPageComponent } from './pages/painting-details-page/painting-details-page.component';
+import { ErrorPageComponent } from './pages/error-page/error-page.component';
+import {RouterModule} from "@angular/router";
 
 
 @NgModule({
@@ -17,13 +23,24 @@ import {PaintingListComponent} from "./components/painting/painting-list/paintin
     MainContainerComponent,
     HomePageComponent,
     PaintingDetailsComponent,
-    PaintingListComponent
+    PaintingListComponent,
+    PaintingPageComponent,
+    SignupPageComponent,
+    SigninPageComponent,
+    PaintingDetailsPageComponent,
+    ErrorPageComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    RouterModule
   ],
   exports: [
     HomePageComponent,
+    PaintingPageComponent,
+    SignupPageComponent,
+    SigninPageComponent,
+    PaintingDetailsPageComponent,
+    ErrorPageComponent
   ]
 })
 export class ArtModule { }
