@@ -13,6 +13,9 @@ import { SigninPageComponent } from './pages/login/signin-page/signin-page.compo
 import { PaintingDetailsPageComponent } from './pages/painting-details-page/painting-details-page.component';
 import { ErrorPageComponent } from './pages/error-page/error-page.component';
 import {RouterModule} from "@angular/router";
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { ArtworkComponent } from './components/painting/artwork/artwork.component';
+
 
 
 @NgModule({
@@ -28,11 +31,13 @@ import {RouterModule} from "@angular/router";
     SignupPageComponent,
     SigninPageComponent,
     PaintingDetailsPageComponent,
-    ErrorPageComponent
+    ErrorPageComponent,
+    ArtworkComponent
   ],
   imports: [
     CommonModule,
-    RouterModule
+    RouterModule,
+    FontAwesomeModule
   ],
   exports: [
     HomePageComponent,

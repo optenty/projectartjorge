@@ -29,12 +29,16 @@ const routes: Routes = [
     component:SigninPageComponent
   },
   {
+    path:'error',
+    component:ErrorPageComponent
+  },
+  {
     path: '**',
-    redirectTo:""
+    redirectTo:"error"
   }];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

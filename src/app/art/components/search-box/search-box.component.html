@@ -1,1 +1,8 @@
-<p>search-box works!</p>
+
+<h5>Buscar:</h5>
+<!--Con la almohadilla podemos tagear elementos y referenciarlos dentro del mismo template-->
+<input type="text"
+       class="form-control"
+       placeholder="Buscar gifs..."
+       (keyup.enter)="searchTag()"
+       #txtTagInput>

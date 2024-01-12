@@ -1,0 +1,21 @@
+body {
+  padding-bottom: 60px; /* Altura del footer */
+}
+
+.footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background-color: #64CCC5; /* Color de fondo del footer */
+  padding: 10px 0;
+  text-align: center;
+  color: #000000;
+}
+
+a{
+  margin-left: 10px;
+}
+svg{
+  padding: 0;
+  margin-right: 5px;
+}

@@ -1,0 +1,23 @@
+body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  margin: 0;
+  background-color: #f8f9fa; /* Cambia el color de fondo según tus preferencias */
+}
+
+.error-container {
+  text-align: center;
+}
+
+.error-icon {
+  font-size: 6rem; /* Ajusta el tamaño del icono según tus preferencias */
+  color: #dc3545; /* Cambia el color del icono según tus preferencias */
+}
+
+.error-message {
+  font-size: 1.5rem; /* Ajusta el tamaño del mensaje según tus preferencias */
+  margin-top: 1rem;
+  color: #343a40; /* Cambia el color del texto según tus preferencias */
+}
