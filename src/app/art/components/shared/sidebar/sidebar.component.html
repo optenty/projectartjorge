@@ -1,0 +1,16 @@
+
+<div class="bg-dark border-right p-4" id="sidebar">
+  <h3 class="text-light">Historial de búsqueda</h3>
+  <hr class="text-white">
+
+  <div class="list-group list-reset">
+    <button
+      *ngFor="let item of tags let isFirst = first"
+      [ngClass]="{'list-group-item-info': isFirst}"
+      class="list-group-item list-group-item-action"
+      (click)="searchTags(item)">
+      {{ item | titlecase}}
+    </button>
+  </div>
+
+</div>

@@ -1,3 +1,43 @@
 <art-header></art-header>
-<p>signup-page works!</p>
+<form class="p-3 border rounded">
+  <div class="container">
+    <h4 class="mb-3">Registro</h4>
+    <p class="mb-3">Por favor, rellena los huecos para realizar tu registro.</p>
+    <hr />
+
+    <div class="mb-3">
+      <label for="signupemail" class="form-label"><b>Email</b></label>
+      <input id="signupemail" type="text" class="form-control" placeholder="Introduce tu email" name="email" required>
+      <label class="errorEmail erroresForm">Ha habido un error al escribir el email</label>
+    </div>
+
+    <div class="mb-3">
+      <label for="signuppassword" class="form-label"><b>Contraseña</b></label>
+      <input type="password" id="signuppassword" class="form-control" placeholder="Introduce tu contraseña" name="psw" required>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label"><b>Contraseña</b></label>
+      <input type="password" class="form-control" placeholder="Repite tu contraseña" name="psw-repeat" required>
+      <label class="errorContra erroresForm">Las contraseñas no coinciden</label>
+    </div>
+
+
+    <div class="mb-3 form-check">
+      <input type="checkbox" checked="checked" class="form-check-input" name="remember">
+      <label class="form-check-label">Mantentme iniciado</label>
+    </div>
+    <label class="errorGeneral erroresForm">Por favor, rellena todos los campos.</label>
+    <p class="mb-3">Al crear la cuenta aceptas nuestros <a href="#" style="color: dodgerblue">Términos y condiciones de uso</a>.</p>
+
+    <div class="clearfix">
+      <div class="contenedorBotones">
+        <a href="#/"><button type="button" class="btn btn-secondary btn-lg">Cancel</button></a>
+
+        <button type="button" class="btn btn-primary btn-lg" id="signupbtn">Sign Up</button>
+      </div>
+    </div>
+  </div>
+</form>
+
 <art-footer></art-footer>

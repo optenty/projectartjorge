@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
-import {CommonModule } from '@angular/common';
+import {CommonModule, NgFor} from '@angular/common';
 import {HeaderComponent} from "./components/header/header.component";
 import {FooterComponent} from "./components/footer/footer.component";
-import {SearchBoxComponent} from "./components/search-box/search-box.component";
+import {SearchBoxComponent} from "./components/shared/search-box/search-box.component";
 import {MainContainerComponent} from "./components/main-container/main-container.component";
 import {HomePageComponent} from "./pages/home-page/home-page.component";
 import {PaintingDetailsComponent} from "./components/painting/painting-details/painting-details.component";
@@ -15,6 +15,9 @@ import { ErrorPageComponent } from './pages/error-page/error-page.component';
 import {RouterModule} from "@angular/router";
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { ArtworkComponent } from './components/painting/artwork/artwork.component';
+import { SidebarComponent } from './components/shared/sidebar/sidebar.component';
+import {LazyImageComponent} from "./components/shared/lazy-image/lazy-image.component";
+import { LogoutPageComponent } from './pages/login/logout-page/logout-page.component';
 
 
 
@@ -32,12 +35,16 @@ import { ArtworkComponent } from './components/painting/artwork/artwork.componen
     SigninPageComponent,
     PaintingDetailsPageComponent,
     ErrorPageComponent,
-    ArtworkComponent
+    ArtworkComponent,
+    SidebarComponent,
+    LazyImageComponent,
+    LogoutPageComponent
   ],
   imports: [
     CommonModule,
     RouterModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    NgFor
   ],
   exports: [
     HomePageComponent,
@@ -45,7 +52,8 @@ import { ArtworkComponent } from './components/painting/artwork/artwork.componen
     SignupPageComponent,
     SigninPageComponent,
     PaintingDetailsPageComponent,
-    ErrorPageComponent
+    ErrorPageComponent,
+    LogoutPageComponent
   ]
 })
 export class ArtModule { }

@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import {ArtService} from "../../services/art.service";
 
 @Component({
   selector: 'app-painting-page',
@@ -6,5 +7,10 @@ import { Component } from '@angular/core';
   styleUrl: './painting-page.component.css'
 })
 export class PaintingPageComponent {
+  constructor(private artService:ArtService ){}
 
+  get arts(){
+    console.log(this.artService.artworkList)
+    return this.artService.artworkList;
+  }
 }

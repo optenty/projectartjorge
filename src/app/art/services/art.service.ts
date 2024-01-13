@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from "@angular/common/http";
-import {Artworks} from "../interfaces/artworks";
+import {HttpClient, HttpParams} from "@angular/common/http";
+import {Artworks, SearchResponse} from "../interfaces/artworks";
 
 @Injectable({
   providedIn: 'root'
@@ -52,14 +52,16 @@ export class ArtService {
     this.organizeHistory(tag)
 
     const params = new HttpParams()
-      .set('api_key', this.GIPHY_API_KEY)
       .set('limit', '10')
       .set('q', tag)
+      .set('fields', 'image_id,title')
 
     this.http.get<SearchResponse>(`${this.serviceUrl}/search`, {params}).subscribe(response => {
-      this.gifList = response.data;
+      this.artworkList = response.data;
     })
 
   }
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+    this.loadLocalStorage();
+  }
 }

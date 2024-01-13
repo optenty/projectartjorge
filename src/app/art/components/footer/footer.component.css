@@ -19,3 +19,7 @@ svg{
   padding: 0;
   margin-right: 5px;
 }
+
+.footer{
+  z-index: 10;
+}

@@ -1,8 +1,8 @@
 import {Component, ElementRef, ViewChild} from '@angular/core';
-import {ArtService} from "../../services/art.service";
+import {ArtService} from "../../../services/art.service";
 
 @Component({
-  selector: 'art-search-box',
+  selector: 'shared-search-box',
   templateUrl: './search-box.component.html',
   styleUrl: './search-box.component.css'
 })

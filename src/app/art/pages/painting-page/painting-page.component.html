@@ -1,4 +1,21 @@
 <art-header></art-header>
-<p>painting-page works!</p>
-<art-search-box></art-search-box>
+
+
 <art-footer></art-footer>
+<div class="d-flex cont">
+  <shared-sidebar></shared-sidebar>
+
+
+  <div class="row p-3">
+    <div class="col-12">
+      <!-- Busqueda -->
+      <shared-search-box></shared-search-box>
+    </div>
+    <div class="col-12 pt-2">
+      <!--Listado de Gifs-->
+      <art-painting-list [artworkList]="arts"></art-painting-list>
+    </div>
+  </div>
+
+</div>
+

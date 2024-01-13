@@ -1,0 +1,14 @@
+<div class="d-flex justify-content-center">
+
+  <img [src]="url"
+       [alt]="alt"
+       class="card-img-top flip-in-ver-left"
+        (load)="onLoad()"
+        [ngStyle]="{display:hasLoaded ? '' : 'none'}">
+  <!--Como necesitamos la estructura de la imagen no podemos hacer ngIf aquí, sin embargo, con ngStyle, podemos aplicar lógica para usar un operador ternario-->
+
+<img *ngIf="!hasLoaded"
+  src="assets/rings.svg" alt="loader"
+  height="70" width="70" class="mt-3" >
+
+</div>
