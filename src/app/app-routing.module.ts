@@ -23,16 +23,14 @@ const routes: Routes = [
     component:PaintingDetailsPageComponent
   },
   {
-    path: 'sign-up',
-    component:SignupPageComponent
+    path: 'auth',
+    //guards
+    loadChildren: ()=> import('./art/auth/auth.module').then(m=>m.AuthModule)
   },
   {
-    path: 'sign-in',
-    component:SigninPageComponent
-  },
-  {
-    path: 'log-out',
-    component:LogoutPageComponent
+    path: 'dashboard',
+    //guards
+    loadChildren: ()=> import('./art/dashboard/dashboard.module').then(m=>m.DashboardModule)
   },
   {
     path:'error',

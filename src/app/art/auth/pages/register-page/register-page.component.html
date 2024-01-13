@@ -1,0 +1,52 @@
+<form class="login100-form" autocomplete="off" [formGroup]="myForm" (ngSubmit)="register()">
+
+  <span class="login100-form-title p-b-49">Registro</span>
+
+  <div class="wrap-input100 m-b-23">
+    <span class="label-input100">Correo</span>
+    <input class="input100" type="email" formControlName="email" placeholder="Correo electrónico">
+    <span class="focus-input100"></span>
+  </div>
+
+  <div class="wrap-input100 m-b-23">
+    <span class="label-input100">Contraseña</span>
+    <input class="input100" type="password" formControlName="password" placeholder="Contraseña">
+    <span class="focus-input100"></span>
+  </div>
+
+  <div class="wrap-input100 m-b-23">
+    <span class="label-input100">Repetir Contraseña</span>
+    <input class="input100" type="password" formControlName="confirmPassword" placeholder="Repetir Contraseña">
+    <span class="focus-input100"></span>
+  </div>
+
+    <div class="m-b-10 errorM" *ngIf="myForm.hasError('passwordMismatch') && myForm.get('confirmPassword')?.dirty">
+      <span class="focus-input100"></span>
+      <div class="error-message">Las contraseñas no coinciden</div>
+  </div>
+
+  <div class="m-b-10">
+    <label class="checkbox-container">
+      Mantenme iniciado
+      <input type="checkbox" formControlName="rememberMe">
+      <span class="checkmark"></span>
+    </label>
+  </div>
+  <div class="m-b-23">
+    <label class="checkbox-container">
+      Al crear la cuenta aceptas nuestros <a href="#" style="color: dodgerblue">Términos y condiciones de uso</a>.
+      <input type="checkbox" formControlName="rememberMe">
+      <span class="checkmark"></span>
+    </label>
+  </div>
+  <div class="container-login100-form-btn">
+    <div class="wrap-login100-form-btn">
+      <div class="login100-form-bgbtn"></div>
+      <button class="login100-form-btn"
+              [disabled]="myForm.invalid"
+              type="submit">
+        Registrarse
+      </button>
+    </div>
+  </div>
+</form>

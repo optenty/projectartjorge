@@ -19,6 +19,7 @@ import { SidebarComponent } from './components/shared/sidebar/sidebar.component'
 import {LazyImageComponent} from "./components/shared/lazy-image/lazy-image.component";
 import { LogoutPageComponent } from './pages/login/logout-page/logout-page.component';
 import { PaginationComponent } from './components/shared/pagination/pagination.component';
+import { AuthLayoutComponent } from './auth/layouts/auth-layout/auth-layout.component';
 
 
 
@@ -40,7 +41,8 @@ import { PaginationComponent } from './components/shared/pagination/pagination.c
     SidebarComponent,
     LazyImageComponent,
     LogoutPageComponent,
-    PaginationComponent
+    PaginationComponent,
+    AuthLayoutComponent
   ],
   imports: [
     CommonModule,
