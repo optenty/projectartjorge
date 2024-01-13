@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpParams} from "@angular/common/http";
-import {Artworks, SearchResponse} from "../interfaces/artworks";
+import {Artworks, Pagination, SearchResponse} from "../interfaces/artworks";
 
 @Injectable({
   providedIn: 'root'
@@ -15,6 +15,10 @@ export class ArtService {
   private _tagsHistory: string[] = [];
 
   private serviceUrl: string = "https://api.artic.edu/api/v1/artworks";
+
+  public currentPage = 1;
+
+  public totalPages!:number;
 
   get tagsHistory() {
     return [...this._tagsHistory];
@@ -51,17 +55,40 @@ export class ArtService {
 
     this.organizeHistory(tag)
 
+    this.loadArtworks(tag)
+    // Calcular el total de páginas
+  }
+
+  loadArtworks(tag:string){
     const params = new HttpParams()
       .set('limit', '10')
       .set('q', tag)
-      .set('fields', 'image_id,title')
+      .set('fields', 'image_id,title,artist_title,artwork_type_title,date_start,thumbnail')
+      .set('page', this.currentPage.toString());
+
+
 
     this.http.get<SearchResponse>(`${this.serviceUrl}/search`, {params}).subscribe(response => {
       this.artworkList = response.data;
+      const pagination: Pagination = response.pagination;
+      this.totalPages = pagination.total_pages;
     })
-
   }
-  constructor(private http: HttpClient) {
+
+  nextPage(tag:string) {
+    this.currentPage++;
+    this.loadArtworks(tag);
+  }
+
+  prevPage(tag:string) {
+    if (this.currentPage > 1) {
+      this.currentPage--;
+      this.loadArtworks(tag);
+    }
+  }
+
+
+    constructor(private http: HttpClient) {
     this.loadLocalStorage();
   }
 }

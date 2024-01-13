@@ -18,6 +18,7 @@ import { ArtworkComponent } from './components/painting/artwork/artwork.componen
 import { SidebarComponent } from './components/shared/sidebar/sidebar.component';
 import {LazyImageComponent} from "./components/shared/lazy-image/lazy-image.component";
 import { LogoutPageComponent } from './pages/login/logout-page/logout-page.component';
+import { PaginationComponent } from './components/shared/pagination/pagination.component';
 
 
 
@@ -38,7 +39,8 @@ import { LogoutPageComponent } from './pages/login/logout-page/logout-page.compo
     ArtworkComponent,
     SidebarComponent,
     LazyImageComponent,
-    LogoutPageComponent
+    LogoutPageComponent,
+    PaginationComponent
   ],
   imports: [
     CommonModule,

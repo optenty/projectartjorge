@@ -1,0 +1,11 @@
+<!-- Botones de paginación -->
+<div class="pagination">
+  <div class="contBot">
+  <button class="btn btn-secondary" (click)="artService.prevPage(artService.tagsHistory[0])">  Anterior < </button>
+  <button class="btn btn-secondary" (click)="artService.nextPage(artService.tagsHistory[0])"> Siguiente > </button>
+  </div>
+  <p>({{artService.currentPage}}/{{artService.totalPages}})</p>
+
+
+</div>
+

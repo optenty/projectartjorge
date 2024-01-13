@@ -7,6 +7,7 @@ import {SignupPageComponent} from "./art/pages/login/signup-page/signup-page.com
 import {SigninPageComponent} from "./art/pages/login/signin-page/signin-page.component";
 import {ErrorPageComponent} from "./art/pages/error-page/error-page.component";
 import {LogoutPageComponent} from "./art/pages/login/logout-page/logout-page.component";
+import {PaintingDetailsPageComponent} from "./art/pages/painting-details-page/painting-details-page.component";
 
 const routes: Routes = [
   {
@@ -19,7 +20,7 @@ const routes: Routes = [
   },
   {
     path: 'artworks/details',
-    component:PaintingDetailsComponent
+    component:PaintingDetailsPageComponent
   },
   {
     path: 'sign-up',
