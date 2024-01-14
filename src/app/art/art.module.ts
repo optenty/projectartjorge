@@ -57,7 +57,9 @@ import { AuthLayoutComponent } from './auth/layouts/auth-layout/auth-layout.comp
     SigninPageComponent,
     PaintingDetailsPageComponent,
     ErrorPageComponent,
-    LogoutPageComponent
+    LogoutPageComponent,
+    HeaderComponent,
+    FooterComponent
   ]
 })
 export class ArtModule { }
