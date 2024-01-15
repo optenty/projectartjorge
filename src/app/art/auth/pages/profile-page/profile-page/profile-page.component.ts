@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core';
 import {AuthService} from "../../../services/auth.service";
-import {Observable} from "rxjs";
 
 @Component({
   selector: 'app-profile-page',
@@ -13,49 +12,47 @@ export class ProfilePageComponent implements OnInit{
   constructor(private authService: AuthService) {}
   avatarUrl: string | null = null;
   newAvatarUrl!: string;
-  userId: string = 'elIdDelUsuario';
+  userId: string | null = null;
+  username: string | null = null;
+  editMode: boolean = false;
+
   // aqui  pondre el id del usuario
   storedData = localStorage.getItem('session');
 
   ngOnInit() {
-    this.getLocalStorageData(this.storedData);
-    // Obtener la URL del avatar al inicializar el componente
-    this.authService.getAvatarUrl(this.userId).subscribe({
-      next: (url) => {
-        // Actualizar la variable avatarUrl si se obtiene una URL
-        this.avatarUrl = url;
-      },
-      error: (error) => {
-        console.error('Error al obtener la URL del avatar:', error);
-      },
-      // Puedes incluir complete si es necesario
-      complete: () => {
-        console.log('La suscripción ha sido completada.');
-      }
-    });
-
-    this.authService.updateAvatarUrl(this.userId, this.newAvatarUrl).subscribe({
-      next: (success) => {
-        if (success) {
-          console.log('Avatar URL updated successfully.');
-        } else {
-          console.error('Failed to update avatar URL.');
+    if(this.storedData!==null){
+      this.getLocalStorageData(this.storedData);
+      // Obtener la URL del avatar al inicializar el componente
+      console.log("prueba "+ this.userId);
+      this.authService.getAvatarUrl(this.userId!).subscribe({
+        next: (url) => {
+          // Actualizar la variable avatarUrl si se obtiene una URL
+          this.avatarUrl = url;
+        },
+        error: (error) => {
+          console.error('Error al obtener la URL del avatar:', error);
+        },
+        // Puedes incluir complete si es necesario
+        complete: () => {
+          console.log('La suscripción ha sido completada.');
         }
-      },
-      error: (error) => {
-        console.error('Error updating avatar URL:', error);
-      },
-      complete: () => {
-        console.log('Update avatar URL subscription completed.');
-      },
-    });
-
-
-
-
-
-    //
-
+      });
+      this.authService.updateAvatarUrl(this.userId!, this.newAvatarUrl).subscribe({
+        next: (success) => {
+          if (success) {
+            console.log('Avatar URL updated successfully.');
+          } else {
+            console.error('Failed to update avatar URL.');
+          }
+        },
+        error: (error) => {
+          console.error('Error updating avatar URL:', error);
+        },
+        complete: () => {
+          console.log('Update avatar URL subscription completed.');
+        },
+      });
+    }
   }
 
 
@@ -65,13 +62,36 @@ export class ProfilePageComponent implements OnInit{
       const storedSession = JSON.parse(storedData);
 
       // Access the user_id property
-      const userId = storedSession.user_id;
+      this.userId = storedSession.user.id;
+
 
       // Now you can use userId as needed
-      console.log('User ID from localStorage:', userId);
+      console.log('User ID from localStorage2:', storedSession.user.id);
+      //cambiar esto
+
     } else {
       console.error('No data found in localStorage');
     }
+  }
+  enableEditMode() {
+    this.editMode = true;
+  }
+
+  guardarCambios(){
+    console.log(this.newAvatarUrl);
+    this.authService.updateAvatarUrl(this.userId!, this.newAvatarUrl).subscribe({
+      next: (success) => {
+        if (success) {
+          console.log('Avatar URL updated successfully.');
+          this.editMode = false;
+        } else {
+          console.error('Failed to update avatar URL.');
+        }
+      },
+      error: (error) => {
+        console.error('Error updating avatar URL:', error);
+      },
+    });
   }
 
   protected readonly localStorage = localStorage;

@@ -5,24 +5,24 @@
   <div *ngIf="avatarUrl">
     <img [src]="avatarUrl" alt="Avatar del usuario">
   </div>
-  <form id="profileForm">
+  <form id="profileForm" (ngSubmit)="guardarCambios()">
     <div class="form-group">
       <label for="username">Nombre de Usuario:</label>
-      <input type="text" class="form-control" id="username" name="username" readonly>
+      <input type="text" class="form-control" id="username" name="username" [attr.readonly]="editMode ? null : true" [(ngModel)]="username">
     </div>
 
     <div class="form-group">
       <label for="email">Correo Electrónico:</label>
-      <input type="email" class="form-control" id="email" name="email" readonly>
+      <input type="email" class="form-control" id="email" name="email" [attr.readonly]="editMode ? null : true">
     </div>
 
     <div class="form-group">
       <label for="avatar">URL del Avatar:</label>
-      <input type="text" class="form-control" id="avatar" name="avatar" readonly>
+      <input type="text" class="form-control" id="avatar" name="avatar" [attr.readonly]="editMode ? null : true" [(ngModel)]="newAvatarUrl">
     </div>
 
-    <button type="button" class="btn btn-primary">Editar Perfil</button>
-    <button type="submit" class="btn btn-success" style="display:none;">Guardar Cambios</button>
+    <button type="button" class="btn btn-primary" [style.display]="editMode ? 'none' : 'block'" (click)="enableEditMode()">Editar Perfil</button>
+    <button type="submit" class="btn btn-success" [style.display]="editMode ? 'block' : 'none'">Guardar Cambios</button>
   </form>
 </div>
 </div>
