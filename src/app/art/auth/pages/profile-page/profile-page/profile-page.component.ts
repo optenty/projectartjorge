@@ -66,6 +66,7 @@ export class ProfilePageComponent implements OnInit{
 
 
       // Now you can use userId as needed
+      console.log('vemos esto: ' + JSON.stringify(storedSession));
       console.log('User ID from localStorage2:', storedSession.user.id);
       //cambiar esto
 

@@ -57,6 +57,7 @@ export class AuthService {
         .signOut()
         .then(() => {
           this.updateUser(null);
+          localStorage.clear();
           observer.next(null);
           observer.complete();
         })

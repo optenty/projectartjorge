@@ -6,13 +6,15 @@ import { LoginPageComponent } from './pages/login-page/login-page.component';
 import { RegisterPageComponent } from './pages/register-page/register-page.component';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import { ProfilePageComponent } from './pages/profile-page/profile-page/profile-page.component';
+import { LogoutPageComponent } from './pages/logout-page/logout-page.component';
 
 
 @NgModule({
   declarations: [
     LoginPageComponent,
     RegisterPageComponent,
-    ProfilePageComponent
+    ProfilePageComponent,
+    LogoutPageComponent
   ],
     imports: [
         CommonModule,
