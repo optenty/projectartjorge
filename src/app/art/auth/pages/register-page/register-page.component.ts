@@ -41,19 +41,21 @@ export class RegisterPageComponent implements  OnInit {
       const email = this.myForm.value.email;
       const password = this.myForm.value.password;
 
-      // Llama al método signUp del AuthService y suscríbete al observable resultante
-      this.authService.signUp(email, password).subscribe(
-        (response) => {
-          // Manejar el éxito, por ejemplo, redirigir a otra página
+      this.authService.signUp(email, password).subscribe({
+        next: (response) => {
           console.log('Registro exitoso', response);
-          // Redirigir a la página deseada
+          // Redirigir a la página deseada u otras acciones necesarias
         },
-        (error) => {
-          // Manejar el error, por ejemplo, mostrar un mensaje de error
+        error: (error) => {
           console.error('Error en el registro', error);
           // Mostrar un mensaje de error al usuario, si es necesario
+        },
+        // Puedes incluir complete si es necesario
+        complete: () => {
+          console.log('La suscripción ha sido completada.');
         }
-      );
+      });
+
     } else {
       console.log('Formulario no válido. Verifica los campos.');
     }

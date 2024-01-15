@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {BehaviorSubject, from, Observable} from "rxjs";
+import {BehaviorSubject, catchError, from, map, Observable, of} from "rxjs";
 import {
   AuthChangeEvent,
   AuthTokenResponsePassword,
@@ -40,7 +40,6 @@ export class AuthService {
           // Update: Using response.data.user instead of response.user
           const user = response.data.user;
           this.updateUser(user);
-
           observer.next(response);
           observer.complete();
         })
@@ -78,6 +77,7 @@ export class AuthService {
             const user = response.user;
             this.updateUser(user);
             // this.saveTokenToLocalStorage(session.access_token);
+            localStorage.setItem('session', JSON.stringify(session));
             observer.next(response);
           } else {
             // No se encontró una sesión válida, considerar como un error de autenticación
@@ -90,6 +90,41 @@ export class AuthService {
           observer.complete();
         });
     });
+  }
+
+  getAvatarUrl(userId: string): Observable<string | null> {
+    return from(
+      this.supabase
+        .from('profiles')
+        .select('avatar_url')
+        .eq('id', userId)
+        .single()
+    ).pipe(
+      map((response) => response?.data?.avatar_url ?? null),
+      catchError((error) => {
+        console.error('Error al obtener el avatar:', error);
+        return of(null);
+      })
+    );
+  }
+
+
+  updateAvatarUrl(userId: string, newAvatarUrl: string): Observable<boolean> {
+    return from(
+      this.supabase
+        .from('profiles')
+        .update({ avatar_url: newAvatarUrl })
+        .eq('id', userId)
+    ).pipe(
+      map((response) => {
+        // Check if the update was successful
+        return response.data !== null;
+      }),
+      catchError((error) => {
+        console.error('Error updating avatar URL:', error);
+        return of(false);
+      })
+    );
   }
 
 
