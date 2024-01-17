@@ -46,6 +46,7 @@ export class AuthService {
         .catch((error) => {
           observer.error(error);
         });
+
     });
   }
 
@@ -57,7 +58,6 @@ export class AuthService {
         .signOut()
         .then(() => {
           this.updateUser(null);
-          localStorage.clear();
           observer.next(null);
           observer.complete();
         })
@@ -78,7 +78,7 @@ export class AuthService {
             const user = response.user;
             this.updateUser(user);
             // this.saveTokenToLocalStorage(session.access_token);
-            localStorage.setItem('session', JSON.stringify(session));
+            sessionStorage.setItem('session', JSON.stringify(session));
             observer.next(response);
           } else {
             // No se encontró una sesión válida, considerar como un error de autenticación

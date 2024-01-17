@@ -17,11 +17,11 @@ export class ProfilePageComponent implements OnInit{
   editMode: boolean = false;
 
   // aqui  pondre el id del usuario
-  storedData = localStorage.getItem('session');
+  storedData = sessionStorage.getItem('session');
 
   ngOnInit() {
     if(this.storedData!==null){
-      this.getLocalStorageData(this.storedData);
+      this.getStorageData(this.storedData);
       // Obtener la URL del avatar al inicializar el componente
       console.log("prueba "+ this.userId);
       this.authService.getAvatarUrl(this.userId!).subscribe({
@@ -56,7 +56,7 @@ export class ProfilePageComponent implements OnInit{
   }
 
 
-  getLocalStorageData(storedData : string | null){
+  getStorageData(storedData : string | null){
     if (storedData) {
       // Parse the JSON string to an object
       const storedSession = JSON.parse(storedData);
@@ -67,11 +67,11 @@ export class ProfilePageComponent implements OnInit{
 
       // Now you can use userId as needed
       console.log('vemos esto: ' + JSON.stringify(storedSession));
-      console.log('User ID from localStorage2:', storedSession.user.id);
+      console.log('User ID from sessionStrorage:', storedSession.user.id);
       //cambiar esto
 
     } else {
-      console.error('No data found in localStorage');
+      console.error('No data found in sessionStorage');
     }
   }
   enableEditMode() {
@@ -95,5 +95,4 @@ export class ProfilePageComponent implements OnInit{
     });
   }
 
-  protected readonly localStorage = localStorage;
 }

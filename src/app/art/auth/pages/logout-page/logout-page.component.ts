@@ -16,6 +16,7 @@ export class LogoutPageComponent {
   }
 
   confirmLogout(){
+    sessionStorage.removeItem('session');
     this.authService.signOut();
     this.router.navigate(['/']);
   }
