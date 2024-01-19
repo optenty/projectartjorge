@@ -63,7 +63,7 @@ export class ArtService {
     const params = new HttpParams()
       .set('limit', '10')
       .set('q', tag)
-      .set('fields', 'image_id,title,artist_title,artwork_type_title,date_start,thumbnail')
+      .set('fields', 'image_id,title,artist_title,artwork_type_title,date_start,thumbnail,id')
       .set('page', this.currentPage.toString());
 
 

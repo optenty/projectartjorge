@@ -16,7 +16,6 @@ export class PaintingDetailsComponent implements OnInit {
   ngOnInit(): void {
     const artworkString = this.route.snapshot.queryParams["artwork"];
     this.artwork = JSON.parse(artworkString);
-    console.log("test" + this.artwork)
 
   }
 

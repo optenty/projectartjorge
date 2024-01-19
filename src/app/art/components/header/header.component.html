@@ -10,18 +10,27 @@
       <li class="nav-item">
         <a class="nav-link" href="/artworks">Artworks</a>
       </li>
+
+      <ng-container *ngIf="isLoggedIn; else notLoggedIn" >
+      <li class="nav-item">
+        <a class="nav-link" href="/artwork-fav">Favoritos</a>
+      </li>
       <li class="nav-item">
         <a class="nav-link" href="/auth/profile">Perfil</a>
       </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/auth/logout">Logout</a>
+      </li>
+      </ng-container>
+      <ng-template #notLoggedIn>
       <li class="nav-item">
         <a class="nav-link" href="/auth">Login</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="/auth/register">Registro</a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/auth/logout">Logout</a>
-      </li>
+      </ng-template>
+
     </ul>
   </div>
 </nav>

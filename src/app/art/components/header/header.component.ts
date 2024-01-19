@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import {AuthService} from "../../auth/services/auth.service";
 
 @Component({
   selector: 'art-header',
@@ -6,5 +7,8 @@ import { Component } from '@angular/core';
   styleUrl: './header.component.css'
 })
 export class HeaderComponent {
+  isLoggedIn: boolean = this.authService.isLogged();
+  constructor(private authService: AuthService){
 
+  }
 }

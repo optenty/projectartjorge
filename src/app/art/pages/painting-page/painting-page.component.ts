@@ -10,7 +10,6 @@ export class PaintingPageComponent {
   constructor(private artService:ArtService ){}
 
   get arts(){
-    console.log(this.artService.artworkList)
     return this.artService.artworkList;
   }
 }

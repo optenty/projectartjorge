@@ -1,0 +1,8 @@
+.megusta:hover{
+  color:red;
+}
+.megusta{
+  border-radius: 0.5rem;
+  width: 17%;
+}
+

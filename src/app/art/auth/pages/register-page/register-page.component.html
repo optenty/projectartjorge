@@ -9,6 +9,12 @@
   </div>
 
   <div class="wrap-input100 m-b-23">
+    <span class="label-input100">Nombre de usuario</span>
+    <input class="input100" type="username" formControlName="username" placeholder="Nombre de usuario">
+    <span class="focus-input100"></span>
+  </div>
+
+  <div class="wrap-input100 m-b-23">
     <span class="label-input100">Contraseña</span>
     <input class="input100" type="password" formControlName="password" placeholder="Contraseña">
     <span class="focus-input100"></span>
@@ -19,19 +25,23 @@
     <input class="input100" type="password" formControlName="confirmPassword" placeholder="Repetir Contraseña">
     <span class="focus-input100"></span>
   </div>
-
+  <div class="wrap-input100 m-b-23">
+    <span class="label-input100">Preferencias</span>
+    <textarea class="input100" type="preferencias" formControlName="preferencias" placeholder="Introduzca el arte que le gusta.&#10;Ej: 'Oleo sobre lienzo'"></textarea>
+    <span class="focus-input100"></span>
+  </div>
     <div class="m-b-10 errorM" *ngIf="myForm.hasError('passwordMismatch') && myForm.get('confirmPassword')?.dirty">
       <span class="focus-input100"></span>
       <div class="error-message">Las contraseñas no coinciden</div>
   </div>
 
-  <div class="m-b-10">
-    <label class="checkbox-container">
-      Mantenme iniciado
-      <input type="checkbox" formControlName="rememberMe">
-      <span class="checkmark"></span>
-    </label>
-  </div>
+<!--  <div class="m-b-10">-->
+<!--    <label class="checkbox-container">-->
+<!--      Mantenme iniciado-->
+<!--      <input type="checkbox" formControlName="rememberMe">-->
+<!--      <span class="checkmark"></span>-->
+<!--    </label>-->
+<!--  </div>-->
   <div class="m-b-23">
     <label class="checkbox-container">
       Al crear la cuenta aceptas nuestros <a href="#" style="color: dodgerblue">Términos y condiciones de uso</a>.

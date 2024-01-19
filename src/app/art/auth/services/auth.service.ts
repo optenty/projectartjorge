@@ -1,8 +1,6 @@
 import { Injectable } from '@angular/core';
-import {BehaviorSubject, catchError, from, map, Observable, of} from "rxjs";
+import {BehaviorSubject, catchError, from, map, mergeMap, Observable, of, switchMap} from "rxjs";
 import {
-  AuthChangeEvent,
-  AuthTokenResponsePassword,
   createClient,
   Session,
   SupabaseClient,
@@ -75,10 +73,12 @@ export class AuthService {
         .then((response: any) => {
           const session = response.data.session;
           if (session) {
-            const user = response.user;
+            const user = response.data.user;
+            console.log("responseLogin: "+JSON.stringify(response));
             this.updateUser(user);
             // this.saveTokenToLocalStorage(session.access_token);
             sessionStorage.setItem('session', JSON.stringify(session));
+            sessionStorage.setItem('user', JSON.stringify(user));
             observer.next(response);
           } else {
             // No se encontró una sesión válida, considerar como un error de autenticación
@@ -109,7 +109,72 @@ export class AuthService {
     );
   }
 
-
+  getUsername(userId: string): Observable<string | null> {
+    return from(
+      this.supabase
+        .from('profiles')
+        .select('username')
+        .eq('id', userId)
+        .single()
+    ).pipe(
+      map((response) => response?.data?.username ?? null),
+      catchError((error) => {
+        console.error('Error al obtener el avatar:', error);
+        return of(null);
+      })
+    );
+  }
+  updateUsername(userId: string, newUsername: string): Observable<boolean> {
+    return from(
+      this.supabase
+        .from('profiles')
+        .update({ username: newUsername })
+        .eq('id', userId)
+    ).pipe(
+      map((response) => {
+        // Check if the update was successful
+        console.log("usuario:" +newUsername);
+        return response.data !== null;
+      }),
+      catchError((error) => {
+        console.error('Error updating avatar URL:', error);
+        return of(false);
+      })
+    );
+  }
+  getPreferencias(userId: string): Observable<string | null> {
+    return from(
+      this.supabase
+        .from('profiles')
+        .select('preferencias')
+        .eq('id', userId)
+        .single()
+    ).pipe(
+      map((response) => response?.data?.preferencias ?? null),
+      catchError((error) => {
+        console.error('Error al obtener el avatar:', error);
+        return of(null);
+      })
+    );
+  }
+  updatePreferencias(userId: string, newPreferencias: string): Observable<boolean> {
+    return from(
+      this.supabase
+        .from('profiles')
+        .update({ preferencias: newPreferencias })
+        .eq('id', userId)
+    ).pipe(
+      map((response) => {
+        // Check if the update was successful
+        console.log("preferencias:" +newPreferencias);
+        return response.data !== null;
+      }),
+      catchError((error) => {
+        console.error('Error updating avatar URL:', error);
+        return of(false);
+      })
+    );
+  }
   updateAvatarUrl(userId: string, newAvatarUrl: string): Observable<boolean> {
     return from(
       this.supabase
@@ -123,6 +188,98 @@ export class AuthService {
       }),
       catchError((error) => {
         console.error('Error updating avatar URL:', error);
+        return of(false);
+      })
+    );
+  }
+
+  isLogged(){
+    // aqui  pondre el id del usuario
+    return sessionStorage.getItem('session') !== null;
+  }
+
+
+  addFavoritos(userId: string, idArtwork: number): Observable<boolean> {
+    return from(
+      this.supabase
+        .from('profiles')
+        .select('artwork_fav')
+        .eq('id', userId)
+        .single()
+    ).pipe(
+      mergeMap((response) => {
+        if (response.data) {
+          const currentArtworkFav = response.data.artwork_fav || [];
+
+          // Compruebo si ya existe y si existe no hago nada
+          if (currentArtworkFav.includes(idArtwork)) {
+            return of(true);
+          }
+          const updatedArtworkFav = [...currentArtworkFav, idArtwork];
+
+          // Hago el update de la tabla
+          return from(
+            this.supabase
+              .from('profiles')
+              .update({ artwork_fav: updatedArtworkFav })
+              .eq('id', userId)
+          ).pipe(
+            map((updateResponse) => {
+              // Check if the update was successful
+              return updateResponse.data !== null;
+            })
+          );
+        } else {
+          // Si no hay response.data hacemos return false
+          return of(false);
+        }
+      }),
+      catchError((error) => {
+        console.error('Error updating artwork_fav:', error);
+        return of(false);
+      })
+    )
+    }
+
+
+  removeFavoritos(userId: string, idArtwork: number): Observable<boolean> {
+    return from(
+      this.supabase
+        .from('profiles')
+        .select('artwork_fav')
+        .eq('id', userId)
+        .single()
+    ).pipe(
+      switchMap((response) => {
+        if (response.data) {
+          const currentArtworkFav = response.data.artwork_fav || [];
+
+          // Compruebo si el idArtwork está en la lista
+          const updatedArtworkFav = currentArtworkFav.filter((artworkId:number) => artworkId !== idArtwork);
+
+          // Si el array no cambió significa que no estaba
+          if (currentArtworkFav.length === updatedArtworkFav.length) {
+            return of(true);
+          }
+
+          // Hago el update de la tabla
+          return from(
+            this.supabase
+              .from('profiles')
+              .update({ artwork_fav: updatedArtworkFav })
+              .eq('id', userId)
+          ).pipe(
+            map((updateResponse) => {
+              return updateResponse.data !== null;
+            })
+          );
+        } else {
+          // Si no hay response.data hacemos return false
+          return of(false);
+        }
+      }),
+      catchError((error) => {
+        console.error('Error updating artwork_fav:', error);
         return of(false);
       })
     );
