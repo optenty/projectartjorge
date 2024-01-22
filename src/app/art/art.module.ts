@@ -17,6 +17,9 @@ import { SidebarComponent } from './components/shared/sidebar/sidebar.component'
 import {LazyImageComponent} from "./components/shared/lazy-image/lazy-image.component";
 import { PaginationComponent } from './components/shared/pagination/pagination.component';
 import { AuthLayoutComponent } from './auth/layouts/auth-layout/auth-layout.component';
+import { FavPageComponent } from './pages/fav-page/fav-page.component';
+import { FavouriteListComponent } from './components/painting/favourite-list/favourite-list.component';
+import { ArtworkFavComponent } from './components/painting/artwork-fav/artwork-fav.component';
 
 
 
@@ -36,7 +39,10 @@ import { AuthLayoutComponent } from './auth/layouts/auth-layout/auth-layout.comp
     SidebarComponent,
     LazyImageComponent,
     PaginationComponent,
-    AuthLayoutComponent
+    AuthLayoutComponent,
+    FavPageComponent,
+    FavouriteListComponent,
+    ArtworkFavComponent
   ],
   imports: [
     CommonModule,

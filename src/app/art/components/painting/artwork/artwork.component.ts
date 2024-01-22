@@ -17,7 +17,7 @@ export class ArtworkComponent implements OnInit, OnChanges{
   isLoggedIn: boolean = this.authService.isLogged();
 
   ngOnInit(): void {
-    if(!this.artwork) throw new Error ("No estas enviando ningun GIFCARD");
+    if(!this.artwork) throw new Error ("No estas enviando ningun ARTWORK");
 
   }
   public urlImagen!: string;

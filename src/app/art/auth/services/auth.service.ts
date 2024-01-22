@@ -1,11 +1,6 @@
-import { Injectable } from '@angular/core';
-import {BehaviorSubject, catchError, from, map, mergeMap, Observable, of, switchMap} from "rxjs";
-import {
-  createClient,
-  Session,
-  SupabaseClient,
-  User
-} from "@supabase/supabase-js";
+import {Injectable} from '@angular/core';
+import {BehaviorSubject, catchError, from, map, mergeMap, Observable, of} from "rxjs";
+import {createClient, Session, SupabaseClient, User} from "@supabase/supabase-js";
 
 @Injectable({
   providedIn: 'root'
@@ -250,7 +245,28 @@ export class AuthService {
     )
     }
 
-
+  getFavoritos(userId:string): Observable<string[]> {
+    return from(
+      this.supabase
+        .from('profiles')
+        .select('artwork_fav')
+        .eq('id', userId)
+        .single()
+    ).pipe(
+      map((response) => {
+        // Check if the update was successful
+        if (response.data) {
+          return response.data.artwork_fav.split("::"); // Retorna el array obtenido de la base de datos
+        } else {
+          return []; // Si no hay datos, retorna un array vacío
+        }
+      }),
+      catchError((error) => {
+        console.error('Error obteniendo favoritos:', error);
+        return of([]); // Manejar el error y retornar un array vacío
+      })
+    );
+  }
   removeFavoritos(userId: string, idArtwork: number): Observable<boolean> {
     return from(
       this.supabase
