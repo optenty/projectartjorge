@@ -1,5 +1,5 @@
 <div class="row">
-  <art-artwork [artwork]=artwork  *ngFor="let artwork of artworkList" class="col-md-3 col-sm-6">
-
-  </art-artwork>
+<!--  <art-artwork [artFavs]=Id  *ngFor="let Id of artFavs" class="col-md-3 col-sm-6">-->
+  <art-artwork-fav [artFavs]=favId *ngFor="let favId of favoritos"  class="col-md-3 col-sm-6">
+  </art-artwork-fav>
 </div>

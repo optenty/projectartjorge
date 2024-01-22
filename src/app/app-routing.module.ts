@@ -4,6 +4,7 @@ import {HomePageComponent} from "./art/pages/home-page/home-page.component";
 import {PaintingPageComponent} from "./art/pages/painting-page/painting-page.component";
 import {ErrorPageComponent} from "./art/pages/error-page/error-page.component";
 import {PaintingDetailsPageComponent} from "./art/pages/painting-details-page/painting-details-page.component";
+import {FavPageComponent} from "./art/pages/fav-page/fav-page.component";
 
 const routes: Routes = [
   {
@@ -13,6 +14,10 @@ const routes: Routes = [
   {
     path: 'artworks',
     component:PaintingPageComponent
+  },
+  {
+    path: 'artwork-fav',
+    component:FavPageComponent
   },
   {
     path: 'artworks/details',

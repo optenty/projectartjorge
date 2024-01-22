@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpParams} from "@angular/common/http";
 import {Artworks, Pagination, SearchResponse} from "../interfaces/artworks";
+import {catchError, EMPTY, map, Observable} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +10,6 @@ export class ArtService {
 
 
   public artworkList: Artworks[] = [];
-
 
   /*Private para que solo se pueda cambiar la variable dentro de este service*/
   private _tagsHistory: string[] = [];
@@ -72,6 +72,25 @@ export class ArtService {
       const pagination: Pagination = response.pagination;
       this.totalPages = pagination.total_pages;
     })
+  }
+
+
+  loadArtworksId(id:string):Observable<any> {
+    const params = new HttpParams()
+      .set('fields', 'image_id,title,artist_title,artwork_type_title,date_start,thumbnail,id')
+
+
+    return this.http.get<SearchResponse>(`${this.serviceUrl}/${id}`, { params })
+      .pipe(
+        map(response => {
+          this.artworkList = response.data;
+          return response.data;
+        }),
+        catchError(error => {
+          console.error("Error en la carga de artworks por ID:", error);
+          return EMPTY;
+        })
+      );
   }
 
   nextPage(tag:string) {

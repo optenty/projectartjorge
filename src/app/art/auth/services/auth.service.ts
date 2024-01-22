@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {BehaviorSubject, catchError, from, map, mergeMap, Observable, of} from "rxjs";
 import {createClient, Session, SupabaseClient, User} from "@supabase/supabase-js";
+import {environment} from "../../../../environments/environment";
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +13,7 @@ export class AuthService {
   user$: Observable<User | null> = this.userSubject.asObservable();
 
   constructor() {
-    this.supabase = createClient('https://qoqbovdljzwvtbaobeml.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFvcWJvdmRsanp3dnRiYW9iZW1sIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTcwNTE4MzA0MCwiZXhwIjoyMDIwNzU5MDQwfQ.HyaPXAkt8YlNaPqWv-1wiIHAlaF6VERVZloF06k_0AY');
+    this.supabase = createClient(environment.supabaseUrl, environment.supabaseKey);
 
     // Verificar si ya hay un usuario autenticado al inicializar el servicio
     this.supabase.auth.onAuthStateChange((event: any, session: Session | null) => {

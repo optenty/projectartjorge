@@ -7,7 +7,6 @@ import { RegisterPageComponent } from './pages/register-page/register-page.compo
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import { ProfilePageComponent } from './pages/profile-page/profile-page/profile-page.component';
 import { LogoutPageComponent } from './pages/logout-page/logout-page.component';
-import { FavPageComponent } from './pages/fav-page/fav-page.component';
 
 
 @NgModule({
@@ -16,7 +15,7 @@ import { FavPageComponent } from './pages/fav-page/fav-page.component';
     RegisterPageComponent,
     ProfilePageComponent,
     LogoutPageComponent,
-    FavPageComponent
+
   ],
     imports: [
         CommonModule,

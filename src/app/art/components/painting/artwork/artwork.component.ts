@@ -23,13 +23,12 @@ export class ArtworkComponent implements OnInit, OnChanges{
   public urlImagen!: string;
 
   ngOnChanges(changes: SimpleChanges) {
-
-      if (this.artwork.image_id === undefined || this.artwork.image_id === null) {
-        console.log("Esta obra no tiene imagen asociada");
-        this.urlImagen="https://www.artic.edu/iiif/2/";
-      } else {
-        this.urlImagen= "https://www.artic.edu/iiif/2/" + this.artwork.image_id + "/full/843,/0/default.jpg";
-      }
+    if (this.artwork.image_id === undefined || this.artwork.image_id === null) {
+      console.log("Esta obra no tiene imagen asociada");
+      this.urlImagen="https://www.artic.edu/iiif/2/";
+    } else {
+      this.urlImagen= "https://www.artic.edu/iiif/2/" + this.artwork.image_id + "/full/843,/0/default.jpg";
+    }
     }
 
   constructor(private router: Router, private authService:AuthService) {}

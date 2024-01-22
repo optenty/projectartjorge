@@ -2,21 +2,13 @@
 
 
 <art-footer></art-footer>
-<div class="d-flex cont">
-  <shared-sidebar></shared-sidebar>
-
-
   <div class="row p-3">
     <div class="col-12">
-      <!-- Busqueda -->
-      <shared-search-box></shared-search-box>
+      <h1 class="text-center"> Bienvenido a la sección de favoritos!</h1>
     </div>
-    <div class="col-12 pt-2">
+    <div class="col-12 pt-2 contenedor">
       <!--Listado de Gifs-->
-      <art-favourite-list [artworkList]="arts"></art-favourite-list>
+      <art-favourite-list></art-favourite-list>
     </div>
-    <art-pagination></art-pagination>
-
   </div>
-</div>
 
