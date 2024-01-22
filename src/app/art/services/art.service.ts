@@ -67,7 +67,6 @@ export class ArtService {
       .set('page', this.currentPage.toString());
 
 
-
     this.http.get<SearchResponse>(`${this.serviceUrl}/search`, {params}).subscribe(response => {
       this.artworkList = response.data;
       const pagination: Pagination = response.pagination;

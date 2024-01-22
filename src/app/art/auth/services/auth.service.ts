@@ -209,13 +209,22 @@ export class AuthService {
     ).pipe(
       mergeMap((response) => {
         if (response.data) {
-          const currentArtworkFav = response.data.artwork_fav || [];
-
-          // Compruebo si ya existe y si existe no hago nada
-          if (currentArtworkFav.includes(idArtwork)) {
-            return of(true);
+          //Arreplegaro tot, separar per , en el split i ja puc observar si está o no
+          let currentArtworkFav = response.data.artwork_fav;
+          let updatedArtworkFav;
+          if(currentArtworkFav!==null){
+            let artworkFavSplit = currentArtworkFav.split('::');
+            // Compruebo si ya existe y si existe no hago nada
+            console.log("el array de ids de la base de datos despues del split es: ");
+            console.log(artworkFavSplit);
+            console.log(idArtwork)
+            if (artworkFavSplit.includes(idArtwork.toString())) {
+              return of(true);
+            }
+             updatedArtworkFav = currentArtworkFav+idArtwork+"::";
+          }else{
+             updatedArtworkFav = idArtwork+"::";
           }
-          const updatedArtworkFav = [...currentArtworkFav, idArtwork];
 
           // Hago el update de la tabla
           return from(
@@ -250,36 +259,55 @@ export class AuthService {
         .eq('id', userId)
         .single()
     ).pipe(
-      switchMap((response) => {
+      mergeMap((response) => {
         if (response.data) {
-          const currentArtworkFav = response.data.artwork_fav || [];
+          // Obtener el array de IDs de la base de datos
+          let currentArtworkFav = response.data.artwork_fav;
 
-          // Compruebo si el idArtwork está en la lista
-          const updatedArtworkFav = currentArtworkFav.filter((artworkId:number) => artworkId !== idArtwork);
 
-          // Si el array no cambió significa que no estaba
-          if (currentArtworkFav.length === updatedArtworkFav.length) {
+
+          if (currentArtworkFav !== null) {
+            let artworkFavSplitted: string[] = currentArtworkFav.split("::");
+
+            // Verificar si el ID a eliminar está presente en el array
+            const indexToRemove = artworkFavSplitted.indexOf(idArtwork.toString());
+
+            if (indexToRemove !== -1) {
+              // Eliminar el ID del array
+              artworkFavSplitted.splice(indexToRemove, 1);
+
+              // Convertir el array de nuevo a cadena
+              let updatedArtworkFav = artworkFavSplitted.join('::');
+
+              // Hacer el update de la tabla
+              return from(
+                this.supabase
+                  .from('profiles')
+                  .update({ artwork_fav: updatedArtworkFav })
+                  .eq('id', userId)
+              ).pipe(
+                map((updateResponse) => {
+                  // Verificar si la actualización fue exitosa
+                  return updateResponse.data !== null;
+                })
+              );
+            } else {
+              // Si el ID no está presente, no hacemos nada
+              return of(true);
+            }
+          } else {
+            // Si artwork_fav es null, no hay IDs que eliminar
             return of(true);
           }
 
-          // Hago el update de la tabla
-          return from(
-            this.supabase
-              .from('profiles')
-              .update({ artwork_fav: updatedArtworkFav })
-              .eq('id', userId)
-          ).pipe(
-            map((updateResponse) => {
-              return updateResponse.data !== null;
-            })
-          );
+
         } else {
-          // Si no hay response.data hacemos return false
+          // Si no hay response.data, devolvemos false
           return of(false);
         }
       }),
       catchError((error) => {
-        console.error('Error updating artwork_fav:', error);
+        console.error('Error deleting artwork_fav:', error);
         return of(false);
       })
     );
