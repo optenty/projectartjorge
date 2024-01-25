@@ -1,5 +1,5 @@
 .megusta:hover{
-  color:red;
+  color: red;
 }
 .megusta{
   border-radius: 0.5rem;
@@ -8,4 +8,7 @@
 .contCarta{
   width: 90%;
   margin: 0 auto;
+}
+.popup p{
+  color: #ff4141 !important;
 }

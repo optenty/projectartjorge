@@ -12,12 +12,28 @@ export class ArtworkComponent implements OnInit, OnChanges{
   @Input()
   public artwork!: Artworks;
   popupVisible: boolean = false;
-  popupVisibleDelete: boolean = false;
-
+  public favoritosId : string[]=[];
   isLoggedIn: boolean = this.authService.isLogged();
 
   ngOnInit(): void {
     if(!this.artwork) throw new Error ("No estas enviando ningun ARTWORK");
+
+    this.authService.getFavoritos(this.authService.UserId).subscribe({
+      next: (favoritosId: string[]) => {
+        console.log('Favoritos obtenidos:', favoritosId.pop());
+        this.favoritosId = favoritosId;
+      },
+      error: (error: any) => {
+        console.error('Error obteniendo favoritos:', error);
+      },
+      complete: () => {
+        console.log('Obtención de favoritos completa');
+        console.log('fav obtenidos:', this.favoritosId);
+        this.botonFav();
+      }
+    });
+
+
 
   }
   public urlImagen!: string;
@@ -37,9 +53,20 @@ export class ArtworkComponent implements OnInit, OnChanges{
     this.router.navigate(['/artworks/details'], { queryParams: { artwork: JSON.stringify(this.artwork) } });
   }
 
+  botonFav(){
+    //pillar todas las artworks, guardarlas en un array y hacer el contains
+    if(this.favoritosId.includes(String(this.artwork.id))){
+      console.log("Esta obra esta en favoritos");
+      this.popupVisible=true;
+    }else{
+      console.log("Esta obra no está en favoritos");
+      this.popupVisible=false
+    }
+
+  }
 
   favoritos(){
-    this.popupVisible = !this.popupVisible;
+    this.popupVisible = true;
     //primero vamos a hacer console.log de la id del artwork que estamos visualizando
 
     // this.authService.addFavoritos( this.artwork.id)
@@ -59,7 +86,7 @@ export class ArtworkComponent implements OnInit, OnChanges{
   }
 
   deleteFavoritos(){
-    this.popupVisibleDelete = !this.popupVisibleDelete;
+    this.popupVisible = false;
     let user = sessionStorage.getItem('user');
     const userObj = JSON.parse(user!);
     console.log('le paso a removeFav: ' + userObj.id , this.artwork.id)

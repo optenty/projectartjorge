@@ -16,27 +16,19 @@ export class FavouriteListComponent implements OnInit {
   public favoritos : string[]=[];
 
   ngOnInit(): void {
-    let suscripcionIds = this.authService.getFavoritos(this.UserId).subscribe({
+    this.authService.getFavoritos(this.authService.UserId).subscribe({
       next: (favoritos: string[]) => {
         console.log('Favoritos obtenidos:', favoritos.pop());
         this.favoritos = favoritos;
-        // Hacer algo con los favoritos obtenidos
       },
       error: (error: any) => {
         console.error('Error obteniendo favoritos:', error);
-        // Manejar el error
       },
       complete: () => {
         console.log('Obtención de favoritos completa');
-        // Realizar acciones después de completar la obtención de favoritos
       }
     });
     }
-  get UserId(){
-    let user = sessionStorage.getItem('user');
-    const userObj = JSON.parse(user!);
-    return userObj.id
-  }
 
 
 }

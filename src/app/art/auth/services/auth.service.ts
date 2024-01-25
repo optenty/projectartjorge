@@ -22,6 +22,15 @@ export class AuthService {
     });
   }
 
+  get UserId(){
+    let user = sessionStorage.getItem('user');
+    const userObj = JSON.parse(user!);
+    return userObj.id
+  }
+
+
+
+
   private updateUser(user: User | null) {
     this.userSubject.next(user);
   }

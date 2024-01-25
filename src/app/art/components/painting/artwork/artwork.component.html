@@ -5,21 +5,22 @@
       {{ artwork.title || 'No title' }}
     </p>
     <button class="btn btn-primary" (click)="navigateToDetails()">Más detalles</button>
-    <hr>
-    <div class="d-flex justify-content-evenly">
-    <button type="button" class="btn btn-danger btn-lg megusta" (click)="favoritos()">
+    <div *ngIf="isLoggedIn">
+      <hr>
+    <div class="d-flex justify-content-evenly" >
+      <button type="button" class="btn btn-danger btn-lg megusta" (click)="favoritos()">
       <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M5 6.2C5 5.07989 5 4.51984 5.21799 4.09202C5.40973 3.71569 5.71569 3.40973 6.09202 3.21799C6.51984 3 7.07989 3 8.2 3H15.8C16.9201 3 17.4802 3 17.908 3.21799C18.2843 3.40973 18.5903 3.71569 18.782 4.09202C19 4.51984 19 5.07989 19 6.2V21L12 16L5 21V6.2Z" stroke="#ffffff" stroke-width="2" stroke-linejoin="round"></path> </g></svg>
     </button>
     <button type="button" class="btn btn-secondary btn-lg megusta" (click)="deleteFavoritos()">
       <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M8 6H19C19.5523 6 20 6.44772 20 7V17C20 17.5523 19.5523 18 19 18H8L2 12L5 9M16 9L13.0001 11.9999M13.0001 11.9999L10 15M13.0001 11.9999L10.0002 9M13.0001 11.9999L16.0002 15" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
     </button>
     </div>
-  </div>
+  <br>
   <!-- popup.component.html -->
   <div *ngIf="popupVisible" class="popup">
-    <p>¡Ítem añadido a favoritos!</p>
+    <p>Te gusta esta obra!<span style="font-size: 2rem; color: #ff4141; margin-left: 1rem">♥</span></p>
   </div>
-  <div *ngIf="popupVisibleDelete" class="popup">
-    <p>¡Ítem eliminado de favoritos!</p>
-  </div>
+
+    </div>
+</div>
 </div>
