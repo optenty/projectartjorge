@@ -3,6 +3,7 @@
 <!--Con la almohadilla podemos tagear elementos y referenciarlos dentro del mismo template-->
 <input type="text"
        class="form-control"
-       placeholder="Buscar gifs..."
+       [(ngModel)]="tag"
+       placeholder="Buscar obras de arte..."
        (keyup.enter)="searchTag()"
        #txtTagInput>

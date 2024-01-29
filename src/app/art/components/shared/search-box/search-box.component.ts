@@ -1,4 +1,4 @@
-import {Component, ElementRef, ViewChild} from '@angular/core';
+import {Component} from '@angular/core';
 import {ArtService} from "../../../services/art.service";
 
 @Component({
@@ -7,16 +7,12 @@ import {ArtService} from "../../../services/art.service";
   styleUrl: './search-box.component.css'
 })
 export class SearchBoxComponent {
-@ViewChild('txtTagInput')
-public tagInput!: ElementRef<HTMLInputElement>;
+  public tag : string ='';
   constructor(private artService: ArtService){}
 
   searchTag(){
-    const newTag = this.tagInput.nativeElement.value;
 
-    this.artService.searchTag(newTag);
-
-    this.tagInput.nativeElement.value = "";
+    this.artService.searchTag(this.tag);
 
   }
 }

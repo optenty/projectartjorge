@@ -10,7 +10,7 @@ export class AuthService {
   private supabase: SupabaseClient;
   private userSubject: BehaviorSubject<User | null> = new BehaviorSubject<User | null>(null);
 
-  user$: Observable<User | null> = this.userSubject.asObservable();
+  // user$: Observable<User | null> = this.userSubject.asObservable();
 
   constructor() {
     this.supabase = createClient(environment.supabaseUrl, environment.supabaseKey);
@@ -202,7 +202,6 @@ export class AuthService {
     // aqui  pondre el id del usuario
     return sessionStorage.getItem('session') !== null;
   }
-
 
   addFavoritos(userId: string, idArtwork: number): Observable<boolean> {
     return from(

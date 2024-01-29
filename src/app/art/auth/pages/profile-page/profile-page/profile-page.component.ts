@@ -99,6 +99,7 @@ export class ProfilePageComponent implements OnInit{
       next: (success) => {
         if (success) {
           console.log('Avatar URL updated successfully.');
+          this.avatarUrl=this.newAvatarUrl;
           this.editMode = false;
         } else {
           console.error('Failed to update avatar URL.');

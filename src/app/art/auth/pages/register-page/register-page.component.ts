@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {AbstractControl, FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {AuthService} from "../../services/auth.service";
-import {Subscription} from "rxjs";
 
 @Component({
   selector: 'app-register-page',
@@ -28,11 +27,9 @@ export class RegisterPageComponent implements  OnInit {
   passwordMatchValidator(control: AbstractControl): { [key: string]: boolean } | null {
     const password = control.get('password');
     const confirmPassword = control.get('confirmPassword');
-
     if (!password || !confirmPassword) {
       return null;
     }
-
     return password.value === confirmPassword.value ? null : { 'passwordMismatch': true };
   }
 

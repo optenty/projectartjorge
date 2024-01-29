@@ -20,6 +20,7 @@ import { AuthLayoutComponent } from './auth/layouts/auth-layout/auth-layout.comp
 import { FavPageComponent } from './pages/fav-page/fav-page.component';
 import { FavouriteListComponent } from './components/painting/favourite-list/favourite-list.component';
 import { ArtworkFavComponent } from './components/painting/artwork-fav/artwork-fav.component';
+import {FormsModule} from "@angular/forms";
 
 
 
@@ -44,12 +45,13 @@ import { ArtworkFavComponent } from './components/painting/artwork-fav/artwork-f
     FavouriteListComponent,
     ArtworkFavComponent
   ],
-  imports: [
-    CommonModule,
-    RouterModule,
-    FontAwesomeModule,
-    NgFor
-  ],
+    imports: [
+        CommonModule,
+        RouterModule,
+        FontAwesomeModule,
+        NgFor,
+        FormsModule
+    ],
   exports: [
     HomePageComponent,
     PaintingPageComponent,
