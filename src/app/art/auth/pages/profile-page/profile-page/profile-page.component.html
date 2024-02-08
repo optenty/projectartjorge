@@ -1,10 +1,9 @@
 <div *ngIf="isLoggedIn; else notLoggedIn">
 <div class="container">
   <h1 class="mb-4 text-center">Mi Perfil</h1>
-  <!-- app-menu.component.html -->
-<!--  <div *ngIf="avatarUrl">-->
-<!--    <img class="avatar" [src]="avatarUrl" style="color:red" alt="Avatar del usuario no encontrado">-->
-<!--  </div>-->
+  <div *ngIf="avatarImage">
+    <img class="avatar" [src]="avatarImage" style="color:red" alt="Avatar del usuario no encontrado">
+  </div>
   <form id="profileForm" (ngSubmit)="guardarCambios()">
     <div class="form-group">
       <label class="label-input100" for="username">Nombre de Usuario:</label>

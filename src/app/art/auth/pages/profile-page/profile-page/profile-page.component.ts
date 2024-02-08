@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {AuthService} from "../../../services/auth.service";
+import {DomSanitizer, SafeResourceUrl} from "@angular/platform-browser";
 
 @Component({
   selector: 'app-profile-page',
@@ -9,7 +10,8 @@ import {AuthService} from "../../../services/auth.service";
 export class ProfilePageComponent implements OnInit{
 
 
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService,     private readonly dom: DomSanitizer
+  ) {}
   // @ts-ignore
   avatar: File;
   newAvatar!: string;
@@ -22,6 +24,11 @@ export class ProfilePageComponent implements OnInit{
   email: string | null = null;
   isLoggedIn: boolean = this.authService.isLogged();
   storedData = sessionStorage.getItem('session');
+  hayAvatar!:string;
+  avatarImage!: SafeResourceUrl;
+
+
+
   ngOnInit() {
     console.log("Avatar: ")
     console.log(this.avatar)
@@ -34,7 +41,28 @@ export class ProfilePageComponent implements OnInit{
       this.getStorageData(this.storedData);
       // Obtener la URL del avatar al inicializar el componente
       console.log("prueba "+ this.userId);
-      // this.authService.getAvatarUrl(this.newAvatar);
+      // Necesito aqui hacer el get del avatar
+
+      this.authService.getAvatarUrl(this.userId!).subscribe({
+        next: (hayAvatar)=>{
+          this.hayAvatar=hayAvatar;
+          console.log("muestro si hay avatar")
+          console.log(hayAvatar);
+          this.downloadImage(hayAvatar);
+
+
+        },
+        error: (error) => {
+          console.error('Error al obtener el username:', error);
+        },
+        // Puedes incluir complete si es necesario
+        complete: () => {
+          console.log('La suscripción ha sido completada.');
+        }
+      })
+
+
+
       this.authService.getUsername(this.userId!).subscribe({
         next: (username) => {
           // Actualizar la variable avatarUrl si se obtiene una URL
@@ -88,33 +116,37 @@ export class ProfilePageComponent implements OnInit{
   }
 
   async guardarCambios(){
+    if(this.newUsername===""){
+      alert('No puedes dejar el campo de username vacío')
+      return;
+    }
     console.log("Avatar: ")
     console.log(this.avatar)
     console.log("NewAvatar: ")
     this.newAvatar = this.newAvatar.substring(this.newAvatar.lastIndexOf("\\")+1);
     console.log(this.newAvatar)
-    // this.authService.updateAvatarUrl(this.newAvatar, this.avatar)
-    // let data = await this.authService.updateAvatarUrl(this.newAvatar, this.avatar);
-    // console.log("lo que da el data.path")
-    // console.log(data.data?.path);
-    //Probar a pasrle a la columna el path o el object o que xD veremos.
+    let data = await this.authService.updateAvatarUrl(this.newAvatar, this.avatar)
+    console.log("lo que da el data.path")
+    console.log(data.data?.path);
+    if(data.error){
+      alert("Error updating avatar");
+    }
+    this.authService.updateColumnAvatarUrl(this.userId!, this.newAvatar).subscribe({
+      next: (success) => {
+        if (success) {
+          console.log('avatarName updated successfully.');
+          this.editMode = false;
+        } else {
+          console.error('Failed to update avatar name.');
+        }
+      },
+      error: (error) => {
+        console.error('Error updating avatarName:', error);
+      },
+    });
 
-    //el usuarname no puede ser null
-    // console.log(this.newAvatarUrl);
-    // this.authService.updateAvatarUrl(this.userId!, this.newAvatarUrl).subscribe({
-    //   next: (success) => {
-    //     if (success) {
-    //       console.log('Avatar URL updated successfully.');
-    //       this.avatarUrl=this.newAvatarUrl;
-    //       this.editMode = false;
-    //     } else {
-    //       console.error('Failed to update avatar URL.');
-    //     }
-    //   },
-    //   error: (error) => {
-    //     console.error('Error updating avatar URL:', error);
-    //   },
-    // });
+
+
     if(this.newUsername!==''){
       this.authService.updateUsername(this.userId!, this.newUsername).subscribe({
         next: (success) => {
@@ -122,7 +154,7 @@ export class ProfilePageComponent implements OnInit{
             console.log('username updated successfully.');
             this.editMode = false;
           } else {
-            console.error('Failed to update avatar URL.');
+            console.error('Failed to update username.');
           }
         },
         error: (error) => {
@@ -144,7 +176,7 @@ export class ProfilePageComponent implements OnInit{
       },
     });
     this.editMode = false;
-    // window.location.reload();
+    window.location.reload();
   }
 
   getUser(){
@@ -166,6 +198,19 @@ export class ProfilePageComponent implements OnInit{
       // En este ejemplo, solo asignamos el primer archivo seleccionado
       this.avatar = files[0];
       console.log(this.avatar); // Aquí puedes hacer lo que necesites con el archivo
+    }
+  }
+
+  async downloadImage(path: string) {
+    try {
+      const { data } = await this.authService.downloadAvatar(path)
+      if (data instanceof Blob) {
+        this.avatarImage = this.dom.bypassSecurityTrustResourceUrl(URL.createObjectURL(data))
+      }
+    } catch (error) {
+      if (error instanceof Error) {
+        console.error('Error downloading image: ', error.message)
+      }
     }
   }
 

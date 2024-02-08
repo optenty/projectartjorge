@@ -98,9 +98,27 @@ export class AuthService {
     });
   }
 
-  getAvatarUrl(filePath: string, file: File) {
-    return this.supabase.storage.from('avatars').upload(filePath, file)
+  getAvatarUrl(userId: string) {
+    return from(
+      this.supabase
+        .from('profiles')
+        .select('avatar_url')
+        .eq('id', userId)
+        .single()
+    ).pipe(
+      map((response) => response?.data?.avatar_url ?? null),
+      catchError((error) => {
+        console.error('Error al obtener el avatar:', error);
+        return of(null);
+      })
+    );
   }
+
+  downloadAvatar(filePath:string){
+    return this.supabase.storage.from('avatars').download(filePath);
+  }
+
+
 
   getUsername(userId: string): Observable<string | null> {
     return from(
@@ -112,7 +130,7 @@ export class AuthService {
     ).pipe(
       map((response) => response?.data?.username ?? null),
       catchError((error) => {
-        console.error('Error al obtener el avatar:', error);
+        console.error('Error al obtener el username:', error);
         return of(null);
       })
     );
@@ -168,15 +186,34 @@ export class AuthService {
       })
     );
   }
-  // updateAvatarUrl(filePath: string, file: File){
-  //   return this.supabase.storage.from('avatars').upload(filePath, file)
-  // }
+  updateAvatarUrl(filePath: string, file: File){
+    return this.supabase.storage.from('avatars').upload(filePath, file)
+  }
+
+
 
   isLogged(){
     // aqui  pondre el id del usuario
     return sessionStorage.getItem('session') !== null;
   }
-
+  updateColumnAvatarUrl(userId: string, avatarName: string): Observable<boolean> {
+    return from(
+      this.supabase
+        .from('profiles')
+        .update({ avatar_url: avatarName })
+        .eq('id', userId)
+    ).pipe(
+      map((response) => {
+        // Check if the update was successful
+        console.log("avatar_url:" + avatarName);
+        return response.data !== null;
+      }),
+      catchError((error) => {
+        console.error('Error updating avatar URL:', error);
+        return of(false);
+      })
+    );
+  }
   addFavoritos(userId: string, idArtwork: number): Observable<boolean> {
     return from(
       this.supabase
