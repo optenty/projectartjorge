@@ -98,20 +98,8 @@ export class AuthService {
     });
   }
 
-  getAvatarUrl(userId: string): Observable<string | null> {
-    return from(
-      this.supabase
-        .from('profiles')
-        .select('avatar_url')
-        .eq('id', userId)
-        .single()
-    ).pipe(
-      map((response) => response?.data?.avatar_url ?? null),
-      catchError((error) => {
-        console.error('Error al obtener el avatar:', error);
-        return of(null);
-      })
-    );
+  getAvatarUrl(filePath: string, file: File) {
+    return this.supabase.storage.from('avatars').upload(filePath, file)
   }
 
   getUsername(userId: string): Observable<string | null> {
@@ -180,23 +168,9 @@ export class AuthService {
       })
     );
   }
-  updateAvatarUrl(userId: string, newAvatarUrl: string): Observable<boolean> {
-    return from(
-      this.supabase
-        .from('profiles')
-        .update({ avatar_url: newAvatarUrl })
-        .eq('id', userId)
-    ).pipe(
-      map((response) => {
-        // Check if the update was successful
-        return response.data !== null;
-      }),
-      catchError((error) => {
-        console.error('Error updating avatar URL:', error);
-        return of(false);
-      })
-    );
-  }
+  // updateAvatarUrl(filePath: string, file: File){
+  //   return this.supabase.storage.from('avatars').upload(filePath, file)
+  // }
 
   isLogged(){
     // aqui  pondre el id del usuario
